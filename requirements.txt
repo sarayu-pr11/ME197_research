@@ -1,0 +1,9 @@
+torch
+numpy
+pandas
+h5py
+matplotlib
+scikit-learn
+jupyter
+tensorboard
+streamlit
