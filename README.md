@@ -26,7 +26,7 @@ pip install -r requirements.txt
 ### Training
 
 ```bash
-python scripts/train.py
+python -m scripts.train_with_logging
 ```
 
 ### Project Goals
