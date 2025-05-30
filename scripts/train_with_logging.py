@@ -8,7 +8,7 @@ from models.emg_pose_model import EMGPoseNet
 from utils.data_loader import EMGDataset
 
 def train_with_logging():
-    dataset = EMGDataset("data/emg2pose_fake_dataset", split="train")
+    dataset = EMGDataset("data/emg2pose_dataset_mini/metadata.csv", "data/emg2pose_dataset_mini", split="val")
     loader = DataLoader(dataset, batch_size=8, shuffle=True)
 
     model = EMGPoseNet()
