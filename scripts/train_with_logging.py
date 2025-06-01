@@ -1,5 +1,4 @@
 import torch
-import sys
 import os
 import torch.nn as nn
 from torch.utils.data import DataLoader
@@ -8,15 +7,21 @@ from models.emg_pose_model import EMGPoseNet
 from utils.data_loader import EMGDataset
 
 def train_with_logging():
-    dataset = EMGDataset("data/emg2pose_dataset_mini/metadata.csv", "data/emg2pose_dataset_mini", split="val")
+    # Initialize dataset and dataloader
+    dataset = EMGDataset(
+        metadata_csv="data/emg2pose_dataset_mini/metadata.csv",
+        data_dir="data/emg2pose_dataset_mini",
+        split="val"  # or "val" depending on your CSV
+    )
     loader = DataLoader(dataset, batch_size=8, shuffle=True)
 
+    # Initialize model and training components
     model = EMGPoseNet()
     criterion = nn.MSELoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
-
     writer = SummaryWriter(log_dir="runs/emg_experiment")
 
+    # Training loop
     model.train()
     for epoch in range(10):
         total_loss = 0
