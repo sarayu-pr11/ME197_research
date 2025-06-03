@@ -1,21 +1,23 @@
+import torch
 import torch.nn as nn
 
-class EMGPoseNet(nn.Module):
+class EMGPoseModel(nn.Module):
     def __init__(self):
         super().__init__()
         self.encoder = nn.Sequential(
-            nn.Conv1d(8, 64, kernel_size=5, stride=1, padding=2),
+            nn.Conv1d(16, 64, kernel_size=5, padding=2),
             nn.ReLU(),
-            nn.Conv1d(64, 128, kernel_size=5, padding=2),
+            nn.MaxPool1d(2),
+            nn.Conv1d(64, 128, kernel_size=3, padding=1),
             nn.ReLU(),
-            nn.AdaptiveAvgPool1d(1)
+            nn.MaxPool1d(2)
         )
         self.fc = nn.Sequential(
-            nn.Flatten(),
-            nn.Linear(128, 64),
-            nn.ReLU(),
-            nn.Linear(64, 15)  # Number of pose outputs
+            nn.AdaptiveAvgPool1d(1),  # (B, 128, 1)
+            nn.Flatten(),             # (B, 128)
+            nn.Linear(128, 20)        # Output pose dimension (20 joints)
         )
 
     def forward(self, x):
-        return self.fc(self.encoder(x))
+        x = self.encoder(x)
+        return self.fc(x)
