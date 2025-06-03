@@ -4,8 +4,7 @@ This project aims to build a neural network model that predicts human hand poses
 
 ## Dataset
 
-We use the open-source **Meta EMG2Pose** dataset, which includes EMG and motion capture data. However, the official META dataset is currently too large to test on, so I am using a custom "fake" dataset generated using OpenAI.
-
+We use the open-source **Meta EMG2Pose** dataset, which includes EMG and motion capture data. However, the official META dataset is currently too large to test on, so I am using a a mini dataset provided by META.
 ## Project Structure
 
 - `data/` - Contains raw HDF5 files and `metadata.csv`
