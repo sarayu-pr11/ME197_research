@@ -10,12 +10,12 @@ class EMGDataset(Dataset):
     def __init__(self, metadata_csv, data_dir, split="train"):
         self.data_dir = data_dir
         self.meta = pd.read_csv(metadata_csv)
-        print("[DEBUG] Loaded CSV with shape:", self.meta.shape)
-        print("[DEBUG] CSV Columns:", list(self.meta.columns))
+      #  print("[DEBUG] Loaded CSV with shape:", self.meta.shape)
+      #  print("[DEBUG] CSV Columns:", list(self.meta.columns))
 
-        print("[DEBUG] Unique 'split' values:", self.meta['split'].unique())
+       # print("[DEBUG] Unique 'split' values:", self.meta['split'].unique())
         self.meta = self.meta[self.meta["split"] == split].copy()
-        print(f"[DEBUG] Metadata filtered to split='{split}', rows remaining:", len(self.meta))
+      #  print(f"[DEBUG] Metadata filtered to split='{split}', rows remaining:", len(self.meta))
 
         # Find valid HDF5 files in the directory
         available_files = {
@@ -23,12 +23,12 @@ class EMGDataset(Dataset):
             if f.endswith(".hdf5")
         }
         print("[DEBUG] HDF5 files found in directory:", len(available_files))
-        print("[DEBUG] Example available files:", list(available_files)[:5])
+      #  print("[DEBUG] Example available files:", list(available_files)[:5])
 
         self.meta["filename_with_ext"] = self.meta["filename"].astype(str) + ".hdf5"
         self.meta = self.meta[self.meta["filename_with_ext"].isin(available_files)].copy()
         print("[DEBUG] Matching metadata filenames:", len(self.meta))
-        print("[DEBUG] Example metadata filenames:", self.meta["filename"].unique()[:5])
+      #  print("[DEBUG] Example metadata filenames:", self.meta["filename"].unique()[:5])
 
         self.file_list = self.meta["filename_with_ext"].tolist()
 
